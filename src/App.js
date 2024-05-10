@@ -1,23 +1,26 @@
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
+import CustomCalendar from './components/Calendar';
+import Login from './components/Login';
 
 function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userId, setUserId] = useState(null);
+
+  const handleLoginSuccess = (id) => {
+    setIsLoggedIn(true);
+    setUserId(id); // Lưu id của người dùng sau khi đăng nhập
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div style={{ height: '500px' }}>
+      {isLoggedIn ? (
+        <div>
+          <CustomCalendar userId={userId} /> {/* Truyền userId vào component Calendar */}
+        </div>
+      ) : (
+        <Login onLoginSuccess={handleLoginSuccess} />
+      )}
     </div>
   );
 }
